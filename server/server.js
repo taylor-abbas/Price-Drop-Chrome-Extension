@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
+const user = require("./routes/user");
 
 const app = express();
 
@@ -16,32 +17,26 @@ const app = express();
 //     }
 // );
 // var db = mongoose.connection;
-// app.get('/post', (req, res) =>{
-//     // res.write("written stuff <3");
-//     console.log(res);
-//     res.send("Dattebayo!");
-// });
-// app.use(function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD"); // update to match the domain you will make the request from
-//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//     next();
-// });
-app.use(express.urlencoded());
 
-// Parse JSON bodies (as sent by API clients)
+// PORT
+const PORT = process.env.PORT || 8000;
+
+// Middleware
 app.use(express.json());
+app.use(express.urlencoded());
 
 // Access the parse results as request.body
 app.post('/post', (req, res)=>{
-    res.send("post request is recieved");
+    res.send("this message is from server.js - post request is recieved");
     console.log("post request is recieved");
     console.log(req.body);
 });
+
 app.get('/post', (req, res) => {
-    res.send("get request is recieved");
+    res.send("this message is from server.js - get request is recieved");
     console.log("get request is recieved");
 })
 
-app.listen(8000, () => {
-    console.log("This is logged stuff");
+app.listen(PORT, () => {
+    console.log("Server has started listening at :" , PORT);
 })
