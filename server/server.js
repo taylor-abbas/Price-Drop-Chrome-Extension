@@ -4,10 +4,12 @@ const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
 const user = require("./routes/user");
-
+const InitiateMongoServer = require("./config/db");
 const app = express();
 
-// const mongoDB = "mongodb+srv://cluster0.whhd7.mongodb.net/Trial_1";
+
+// command for mongo shell to connect to db 'mongo "mongodb+srv://cluster0.whhd7.mongodb.net/Trial1" --username taylor_abbas';
+// const mongoDB = 'mongodb+srv://taylor_abbas:mongodb123@cluster0.whhd7.mongodb.net/Trial1';
 // mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true}).then(
 //     ()=>{
 //         console.log("Database is connected!");
@@ -18,21 +20,24 @@ const app = express();
 // );
 // var db = mongoose.connection;
 
+InitiateMongoServer();
+
 // PORT
 const PORT = process.env.PORT || 8000;
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded());
+app.use("/user", user);
 
 // Access the parse results as request.body
-app.post('/post', (req, res)=>{
-    res.send("this message is from server.js - post request is recieved");
-    console.log("post request is recieved");
-    console.log(req.body);
-});
+// app.post('/', (req, res)=>{
+//     res.send("this message is from server.js - post request is recieved");
+//     console.log("post request is recieved");
+//     console.log(req.body);
+// });
 
-app.get('/post', (req, res) => {
+app.get('/', (req, res) => {
     res.send("this message is from server.js - get request is recieved");
     console.log("get request is recieved");
 })

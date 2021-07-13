@@ -1,6 +1,24 @@
 <h1>{{title}}</h1>
-<a ui-sref="home">Home</a>
-<h3  style="align-self: auto;">This is actually from templates/login.html</h3>
+<form action="/login">
+    <input
+        type="email"
+        ng-model="email"
+        placeholder="mail@email.com"
+        required
+    />
+    <input
+        type="password"
+        ng-model="password"
+        placeholder="min. length - 6"
+    />
+    <input
+        type="submit"
+        value="Login"
+        ng-click="submitted()"
+        ui-sref="home"
+    />
+</form>
+
 <form action="">
     <input type="submit" value="Sign Up" ui-sref="signup">
 </form>
