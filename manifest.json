@@ -1,6 +1,6 @@
 {
 	"manifest_version" : 2,
-	"name" : "first ext",
+	"name" : "Amazon Ext",
 	"version" : "1.0", 
 	"description" : "A trial first extension",
 	"background": {
