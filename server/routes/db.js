@@ -20,7 +20,7 @@ async function update(item, req){
     console.log(
       `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
     );
-    return
+    return result;
 }
 
 router.post("/insert" , function(req,res,next){
