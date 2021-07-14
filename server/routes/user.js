@@ -69,7 +69,7 @@ router.post(
             jwt.sign(
                 payload,
                 "randomString", {
-                    expiresIn: 10000
+                    expiresIn: '365d'
                 },
                 (err, token) => {
                     if (err) throw err;
@@ -130,7 +130,7 @@ router.post(
             jwt.sign(
                 payload,
                 "randomString", {
-                    expiresIn: 3600
+                    expiresIn: '365d'
                 },
                 (err, token) => {
                     if (err) throw err;
@@ -159,10 +159,13 @@ router.get("/me", auth, async (req, res) => {
         // request.user is getting fetched from Middleware after token authentication
         const user = await User.findById(req.user.id);
         res.json(user);
+        console.log(user);
+
     } catch (e) {
         res.send({
             message: "Error in Fetching user"
         });
+        console.log("Error in Fetching user");
     }
 });
 
