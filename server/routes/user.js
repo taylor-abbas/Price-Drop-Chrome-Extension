@@ -197,7 +197,7 @@ router.post(
             var item = {
                 name : req.body.name,
                 price : req.body.price,
-                item_n : req.body.itemNumber,
+                item_n : req.body.item_n,
             }
             const updateDocument = {
                 $push: {products: item }

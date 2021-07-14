@@ -20,22 +20,25 @@ function getRequest(reqData, api){
     });
 }
 
-function postRequest(reqData, api){
+async function postRequest(reqData, api){
     $.ajax({    
         type: "POST",
         url: url + api,
         data: reqData,
         success: (data,status)=> {
             console.log("success ajax post from bg.js");
-            console.log(data.token);
             console.log(status);
             if(status == "success"){
-                chrome.storage.sync.set({token: data.token}, function() {
-                    console.log('Token Value is set to ' + data.token);
-                });
-                chrome.storage.sync.get(['token'], function(result) {
-                    console.log('Token value currently is ' , result.token);
-                });
+                if(data.token != undefined){
+                    chrome.storage.sync.set({token: data.token}, function() {
+                        console.log('Token Value is set to ' + data.token);
+                    });
+                    chrome.storage.sync.get(['token'], function(result) {
+                        console.log('Token value currently is ' , result.token);
+                    });
+                }
+                console.log(data);
+                return data;
             }
         },
         error:()=>{
@@ -95,6 +98,35 @@ async function verifyLogin(reqData , api){
         });
     });
 }
+function readLocalStorage(key) {
+    console.log(3);
+    return new Promise((resolve, reject) => {
+        chrome.storage.sync.get([key], function(items) {
+            if (Object.values(items)[0] != undefined) {
+                console.log("completed readLocalStorage");
+                console.log(items);
+                console.log(Object.values(items)[0]);
+                resolve(Object.values(items)[0]);
+            } else {
+                console.log("promise rejected");
+                reject();
+            }
+        });
+    });
+};
+async function getData (key, request){
+    console.log(2);
+    try{
+        request.email = await readLocalStorage('email');
+        let res = await postRequest(request, 'user/insert');
+        console.log("back ground.js sent post Req ", res);
+        return res;
+    }catch(err){
+        console.log("this is the error " , err);
+        return "Error"
+    }
+}
+
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
@@ -131,7 +163,11 @@ chrome.runtime.onMessage.addListener(
                 console.log(result);
                 sendResponse(result);
             });
-            
+        }
+        if (request.message == "Add this to products"){
+            console.log(request);
+            let res = getData('email', request);
+            return res;
         }
         return true;
     }

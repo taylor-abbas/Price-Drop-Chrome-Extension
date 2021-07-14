@@ -13,8 +13,8 @@
 	},
 	"content_scripts": [
 		{
-		"matches": ["http://*.amazon.in/*" , "http://*.amazon.com/*"],
-		"js": ["static/jquery-3.6.0.min.js", "static/ajax-min.js", "static/angular-ui-router.min.js", "static/angular.min.js"]
+		"matches": ["https://www.amazon.in/*" , "https://*.amazon.com/*"],
+		"js": ["content.js" , "static/jquery-3.6.0.min.js", "static/ajax-min.js", "static/angular-ui-router.min.js", "static/angular.min.js"]
 		}
 	],
 	"browser_action":{
