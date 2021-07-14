@@ -9,6 +9,7 @@ const InitiateMongoServer = async () => {
       useNewUrlParser: true
     });
     console.log("Connected to DB !!");
+    // return db;
   } catch (e) {
     console.log(e);
     throw e;

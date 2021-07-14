@@ -13,6 +13,10 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  products: {
+    type: Array,
+    default: []
+  },
   createdAt: {
     type: Date,
     default: Date.now()

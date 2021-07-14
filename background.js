@@ -33,7 +33,6 @@ function postRequest(reqData, api){
                 chrome.storage.sync.set({token: data.token}, function() {
                     console.log('Token Value is set to ' + data.token);
                 });
-
                 chrome.storage.sync.get(['token'], function(result) {
                     console.log('Token value currently is ' , result.token);
                 });
@@ -102,6 +101,11 @@ chrome.runtime.onMessage.addListener(
         if (request.message == "Sign Up Complete"){
             sendResponse({message: "Credentials recieved at background.js"});
             console.log(request);
+            request.products = [{
+                name : "sample product",
+                price : 0,
+                item_n : 000000
+            }];
             postRequest(request, 'user/signup');
         }
         if (request.message == "Verify user through token"){
@@ -115,7 +119,6 @@ chrome.runtime.onMessage.addListener(
                 console.log(result);
                 sendResponse(result);
             });
-            
         }
         if (request.message == "Verify user through Login Credentials"){
             console.log(request);

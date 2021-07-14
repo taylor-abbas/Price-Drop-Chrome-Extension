@@ -1,10 +1,10 @@
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const user = require("./routes/user");
 const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
-const user = require("./routes/user");
-const db = require("./routes/db");
+// const db = require("./routes/db");
 const InitiateMongoServer = require("./config/db");
 const app = express();
 
@@ -30,14 +30,14 @@ const PORT = process.env.PORT || 8000;
 app.use(express.json());
 app.use(express.urlencoded());
 app.use("/user", user);
-app.use("/db", db);
 
 // Access the parse results as request.body
-// app.post('/', (req, res)=>{
-//     res.send("this message is from server.js - post request is recieved");
-//     console.log("post request is recieved");
-//     console.log(req.body);
-// });
+app.post('/db/insert', (req, res)=>{
+    console.log("db insert request recieved");
+    console.log(req.body);
+    const db = mongoose.model('users');
+    console.log(db);
+});
 
 app.get('/', (req, res) => {
     res.send("this message is from server.js - get request is recieved");

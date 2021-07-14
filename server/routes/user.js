@@ -37,8 +37,10 @@ router.post(
         const {
             username,
             email,
-            password
+            password,
+            products
         } = req.body;
+        console.log(req.body);
         try {
             let user = await User.findOne({
                 email
@@ -52,9 +54,11 @@ router.post(
             user = new User({
                 username,
                 email,
-                password
+                password,
+                products
             });
-
+            console.log("this is user")
+            console.log(user);
             const salt = await bcrypt.genSalt(10);
             user.password = await bcrypt.hash(password, salt);
 
@@ -168,5 +172,65 @@ router.get("/me", auth, async (req, res) => {
         console.log("Error in Fetching user");
     }
 });
+
+router.post(
+    "/insert",
+    [],
+    async (req, res) => {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                errors: errors.array()
+            });
+        }
+
+        const {
+            email
+        } = req.body;
+        try {
+            console.log(1 , email);
+            let user = await User.findOne({
+                email
+            });
+            
+            var item = {
+                name : req.body.name,
+                price : req.body.price,
+                item_n : req.body.itemNumber,
+            }
+            const updateDocument = {
+                $push: {products: item }
+            };
+            console.log(user);
+            console.log(2);
+            const result = await user.updateOne(updateDocument);
+            console.log("Complete update")
+            console.log(result);
+            
+            console.log(3);
+            res.send(result);
+            
+        } catch (e) {
+            console.error(e);
+            res.status(500).json({
+                message: "Server Error"
+            });
+        }
+    }
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = router;
