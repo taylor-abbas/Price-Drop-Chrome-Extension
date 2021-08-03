@@ -87,7 +87,7 @@ async function verifyLogin(reqData , api){
                     console.log(data);
                     resolve(data);
                 } else {
-                    reject();
+                    reject(err);
                 }
             },
             error:(err)=>{
