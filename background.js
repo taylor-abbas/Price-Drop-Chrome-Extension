@@ -93,7 +93,7 @@ async function verifyLogin(reqData , api){
             error:(err)=>{
                 console.log("error ajax get");
                 console.log(err);
-                return err;
+                reject (err);
             }
         });
     });
